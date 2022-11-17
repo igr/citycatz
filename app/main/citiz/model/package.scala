@@ -10,4 +10,9 @@ package object model {
   object XmlContent extends TaggedType[String]
   type XmlContent = XmlContent.Type
 
+  object Latitude extends TaggedType[Double]
+  type Latitude = Latitude.Type
+
+  object Longitude extends TaggedType[Double]
+  type Longitude = Longitude.Type
 }

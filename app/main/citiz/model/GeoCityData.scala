@@ -1,17 +1,18 @@
 package citiz.model
 
-import parser.Population
+import parser.{CityName, Country, Population}
 
 case class GetCityData(data: GeoCityDetails)
 
-case class GeoCityDetails(name: String,
-                          country: String,
+// todo add tagged types for remaining fields
+case class GeoCityDetails(name: CityName,
+                          country: Country,
                           countryCode: String,
                           region: String,
                           regionCode: String,
                           elevationMeters: Option[Int],
-                          latitude: Double,
-                          longitude: Double,
+                          latitude: Latitude,
+                          longitude: Longitude,
                           population: Population,
                           timezone: String,
                           deleted: Boolean)
