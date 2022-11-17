@@ -3,7 +3,7 @@ package citiz
 import cats.*
 import cats.effect.*
 import cats.implicits.*
-import citiz.model.{City, CityXml}
+import citiz.model.{City, CityXml, FileName, XmlContent}
 import io.circe.syntax.EncoderOps
 import parser.CityParser
 import syseff.{Console, Environment, StdConsole, SysEnvironment}
@@ -29,7 +29,7 @@ object Main extends IOApp {
     for {
       xml <- readFile(file)
       city <- xml match {
-        case Some(content) => Sync[F].delay(Some(CityXml(file.getName, content)))
+        case Some(content) => Sync[F].delay(Some(CityXml(FileName(file.getName), XmlContent(content))))
         case None => Sync[F].pure(None)
       }
     } yield city

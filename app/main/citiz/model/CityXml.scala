@@ -1,3 +1,4 @@
 package citiz.model
 
-case class CityXml(name: String, xml: String)
+case class CityXml(name: FileName, xml: XmlContent)
+

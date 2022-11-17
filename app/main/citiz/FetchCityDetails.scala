@@ -34,7 +34,6 @@ class HttpFetchCityDetails[F[_]: Sync] extends FetchCityDetails[F] {
 
     Sync[F].delay {
 
-
       val response: Identity[Response[Either[ResponseException[String, io.circe.Error], GeoCityDetails]]] =
         request
           .response(asJson[GetCityData])
