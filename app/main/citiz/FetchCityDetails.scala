@@ -1,22 +1,9 @@
 package citiz
 
 import cats.effect.Sync
+import citiz.model.{GeoCityDetails, GetCityData}
 import sttp.client3.*
 import sttp.client3.circe.*
-
-case class GeoCityDetails(name: String,
-                          country: String,
-                          countryCode: String,
-                          region: String,
-                          regionCode: String,
-                          elevationMeters: Option[Int],
-                          latitude: Double,
-                          longitude: Double,
-                          population: Int,
-                          timezone: String,
-                          deleted: Boolean)
-
-case class GetCityData(data: GeoCityDetails)
 
 trait FetchCityDetails[F[_]] {
 
@@ -30,7 +17,7 @@ class HttpFetchCityDetails[F[_]: Sync] extends FetchCityDetails[F] {
     val request = basicRequest.get(uri"http://geodb-free-service.wirefreethought.com/v1/geo/cities/$cityId")
     val backend = HttpClientSyncBackend()
 
-    import io.circe.generic.auto.*
+    import citiz.model.AppJsonCodecs.*
 
     Sync[F].delay {
 

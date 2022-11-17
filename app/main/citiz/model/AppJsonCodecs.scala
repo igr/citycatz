@@ -1,9 +1,8 @@
 package citiz.model
 
-import citiz.GeoCityDetails
-import io.circe.generic.semiauto.deriveEncoder
+import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.syntax.EncoderOps
-import io.circe.{Encoder, Json}
+import io.circe.{Decoder, Encoder, Json}
 import json.JsonCodecs
 import parser.*
 import tagged.auto.typeclass.*
@@ -12,6 +11,8 @@ object AppJsonCodecs extends JsonCodecs {
 
   implicit lazy val cityEncoder: Encoder[City] = deriveEncoder
   implicit lazy val geoCityDetailsEncoder: Encoder[GeoCityDetails] = deriveEncoder
+  implicit lazy val geoCityDetailsDecoder: Decoder[GeoCityDetails] = deriveDecoder
+  implicit lazy val geoCityDataDecoder: Decoder[GetCityData] = deriveDecoder
 
 //  implicit lazy val cityNameEncoder: Encoder[CityName @@ String] = taggedEncoder[CityName, String]
   implicit val cityTagEncoder: Encoder[CityTag] = enumEncoder
