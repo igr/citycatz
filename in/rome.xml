@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<city>
+  <name>Rome</name>
+  <country>Italy</country>
+  <population>3000000</population>
+  <wikiDataId>Q220</wikiDataId>
+  <tags>
+    <tag>old</tag>
+    <tag>cool</tag>
+    <tag>hip</tag>
+  </tags>
+  <params>
+    <param name="state">Lazio</param>
+    <param name="timezone">+1</param>
+  </params>
+</city>

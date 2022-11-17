@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<city>
+  <name>New York</name>
+  <country>USA</country>
+  <population>8800000</population>
+  <wikiDataId>Q60</wikiDataId>
+  <tags>
+    <tag>busy</tag>
+    <tag>noisy</tag>
+    <tag>cool</tag>
+  </tags>
+  <params>
+    <param name="state">New York</param>
+    <param name="timezone">-5</param>
+  </params>
+</city>

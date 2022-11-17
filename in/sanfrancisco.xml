@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<city>
+  <name>San Francisco</name>
+  <country>USA</country>
+  <population>800000</population>
+  <wikiDataId>Q62</wikiDataId>
+  <tags>
+    <tag>cool</tag>
+    <tag>hip</tag>
+    <tag>tech</tag>
+  </tags>
+  <params>
+    <param name="state">California</param>
+    <param name="timezone">-8</param>
+  </params>
+</city>

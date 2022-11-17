@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<city>
+  <name>Belgrade</name>
+  <country>Serbia</country>
+  <population>2000000</population>
+  <wikiDataId>Q2074197</wikiDataId>
+  <tags>
+    <tag>old</tag>
+    <tag>cool</tag>
+    <tag>hip</tag>
+  </tags>
+  <params>
+    <param name="state">Serbia</param>
+    <param name="timezone">+1</param>
+  </params>
+</city>
