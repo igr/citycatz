@@ -20,12 +20,12 @@ object Main extends IOApp {
       out <- E.getEnv("OUT_PATH")
     } yield Settings(ins, out)
 
-  private def collectCityFiles[F[_]: Concurrent](folder: String): F[Seq[File]] =
+  private def collectCityFiles[F[_]: Sync](folder: String): F[Seq[File]] =
     Sync[F].delay {
       new File(s"$folder").listFiles(onlyFiles).toSeq
     }
 
-  private def loadCityXml[F[_]: Concurrent](file: File): F[Option[CityXml]] =
+  private def loadCityXml[F[_]: Sync](file: File): F[Option[CityXml]] =
     for {
       xml <- readFile(file)
       city <- xml match {
@@ -34,7 +34,7 @@ object Main extends IOApp {
       }
     } yield city
 
-  def writeCityJson[F[_]: Concurrent](outFolder: String, city: City): F[Try[Unit]] = {
+  def writeCityJson[F[_]: Sync](outFolder: String, city: City): F[Try[Unit]] = {
     import citiz.model.AppJsonCodecs.*
     writeFile(new File(outFolder, s"${city.data.name}.json"), city.asJson.noSpaces)
   }
@@ -47,7 +47,7 @@ object Main extends IOApp {
     program[IO].as(ExitCode.Success)
   }
 
-  private def program[F[_]: Concurrent](
+  private def program[F[_]: Sync](
     implicit C: Console[F],
     E: Environment[F],
     D: FetchCityDetails[F],

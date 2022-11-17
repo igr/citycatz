@@ -1,5 +1,4 @@
-import cats.effect.{Concurrent, Sync}
-
+import cats.effect.Sync
 import io.circe.JsonObject
 import io.circe.parser.parse
 import parser.ParamsMap
@@ -12,12 +11,12 @@ package object citiz {
 
   val onlyFiles: FileFilter = (file: File) => file.isFile && file.canRead
 
-  def readFile[F[_]: Concurrent](file: File): F[Option[String]] =
+  def readFile[F[_]: Sync](file: File): F[Option[String]] =
     Sync[F].delay {
       Using(Source.fromFile(file))(source => source.mkString).toOption
     }
 
-  def writeFile[F[_]: Concurrent](file: File, content: String): F[Try[Unit]] =
+  def writeFile[F[_]: Sync](file: File, content: String): F[Try[Unit]] =
     Sync[F].delay {
       Using(new BufferedWriter(new PrintWriter(file)))(writer => writer.write(content))
     }
