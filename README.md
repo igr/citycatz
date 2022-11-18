@@ -1,3 +1,3 @@
 # citycatz
 
-Scala &amp; Cats
+Scala . Cats . Effects . Circe . Sttp

@@ -41,5 +41,6 @@ val app =
         Deps.Circe.Generic,
         Deps.Sttp.Core,
         Deps.Sttp.Circe,
+        Deps.Sttp.Armeria,
       )
     )

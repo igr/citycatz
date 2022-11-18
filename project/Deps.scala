@@ -2,9 +2,9 @@ import sbt._
 
 object Deps {
 
-  object Cats extends Dep("org.typelevel", "2.8.0") {
+  object Cats extends Dep("org.typelevel", "2.9.0") {
     val Core = module("cats-core") withJavadoc()
-    val Effect = module("cats-effect", version = "2.5.3") withJavadoc()
+    val Effect = module("cats-effect", version = "3.4.1") withJavadoc()
   }
 
   object Circe extends Dep("io.circe", "0.14.1") {
@@ -19,10 +19,10 @@ object Deps {
 
   val ScalaTest = "org.scalatest" %% "scalatest" % "3.2.14" % Test
 
-
   object Sttp extends Dep("com.softwaremill.sttp.client3", "3.8.3") {
     val Core = module("core")
     val Circe = module("circe")
+    val Armeria = module("armeria-backend-cats")
   }
 
   abstract class Dep(val organization: String, val version: String) {

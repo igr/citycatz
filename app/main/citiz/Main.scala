@@ -3,10 +3,10 @@ package citiz
 import cats.*
 import cats.effect.*
 import cats.implicits.*
-import citiz.model.{City, CityXml, FileName, XmlContent}
+import citiz.model.{ City, CityXml, FileName, XmlContent }
 import io.circe.syntax.EncoderOps
 import parser.CityParser
-import syseff.{Console, Environment, StdConsole, SysEnvironment}
+import syseff.{ Console, Environment, StdConsole, SysEnvironment }
 
 import java.io.File
 import scala.util.Try
@@ -43,15 +43,20 @@ object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = {
     implicit val C: Console[IO] = StdConsole[IO]
     implicit val E: Environment[IO] = SysEnvironment[IO]
-    implicit val D: FetchCityDetails[IO] = HttpFetchCityDetails[IO]
+
+    // switch the implementation here to use the sync or async version of the API client
+//    implicit val FetchCity: FetchCityDetails[IO] = HttpFetchCityDetails[IO]
+    implicit val FetchCity: FetchCityDetails[IO] = HttpFetchCityDetailsAsync[IO]
+
     program[IO].as(ExitCode.Success)
   }
 
   private def program[F[_]: Sync](
-    implicit C: Console[F],
-    E: Environment[F],
-    D: FetchCityDetails[F],
-    P: Parallel[F]): F[Unit] =
+                                   implicit C: Console[F],
+                                   E: Environment[F],
+                                   FetchCity: FetchCityDetails[F],
+                                   P: Parallel[F]): F[Unit] =
+
     for {
       settings <- loadSettingsFromEnvs
 
@@ -69,7 +74,7 @@ object Main extends IOApp {
       // fetch details for cities and merge everything together
       cities <- citiesData.parTraverse { eitherCityData =>
         for {
-          a <- eitherCityData.map(_.wikiDataId).traverse(D.fetchDetails)
+          a <- eitherCityData.map(_.wikiDataId).traverse(FetchCity.fetchDetails)
           b = a.map(_.leftMap(error => s"Error fetching city details: ${error.getMessage}")).flatten
           c = (eitherCityData, b).mapN(City)
         } yield c
@@ -85,7 +90,9 @@ object Main extends IOApp {
         case Left(error) => C.print(s"❌ $error")
       }
 
-      _ <- C.putStrLn(s"Total cities: ${cities.size}. Errors: ${cities.count(_.isLeft)} - Successes: ${cities.count(_.isRight)}")
+      _ <- C.putStrLn(
+        s"Total cities: ${cities.size}. Errors: ${cities.count(_.isLeft)} - Successes: ${cities.count(_.isRight)}"
+      )
     } yield ()
 
 }
